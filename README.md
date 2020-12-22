@@ -1,6 +1,8 @@
 # pytechecker
 ✔️ A small uility Python module for type checking an object towards a sample object.
 
+![Tests](https://github.com/dcronqvist/pytechecker/workflows/Tests/badge.svg?branch=main)
+
 ## Getting started
 
 Let's start by taking a look at a very simple sample object:
