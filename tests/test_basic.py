@@ -504,4 +504,50 @@ def test_18_checking_high_depth_overflow():
     }
 
     overflow = get_overflow(sample, obj, all_sub=True)
-    assert overflow == ["age", "postal_code"], "Basic overflow test with multiple depth failed."
+    succ, errors = check(sample, obj, allow_overflow=True)
+    assert overflow == ["age", "postal_code"] and succ, "Basic overflow test with multiple depth failed."
+
+
+# TEST 19
+def test_19_checking_high_depth_overflow():
+    sample = {
+        "person": {
+            "required": True,
+            "allowed_types": [dict],
+            "embedded_dict": {
+                "name": {
+                    "required": True,
+                    "allowed_types": [str]
+                },
+                "address": {
+                    "required": True,
+                    "allowed_types": [dict],
+                    "embedded_dict": {
+                        "city": {
+                            "required": True,
+                            "allowed_types": [str]
+                        },
+                        "street": {
+                            "required": True,
+                            "allowed_types": [str]
+                        }
+                    }
+                }
+            }
+        }
+    }
+    obj = {
+        "person": {
+            "name": "Daniel Cronqvist",
+            "age": 21,
+            "address": {
+                "city": "Göteborg",
+                "street": "Pilegårdsgatan 20B",
+                "postal_code": "41877"
+            }
+        }
+    }
+
+    overflow = get_overflow(sample, obj, all_sub=True)
+    succ, errors = check(sample, obj, allow_overflow=False)
+    assert overflow == ["age", "postal_code"] and not succ, "Basic overflow test with multiple depth failed."
