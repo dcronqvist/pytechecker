@@ -126,7 +126,7 @@ def test_7_basic_embedded_objects_two_levels():
                             "allowed_types": [str]
                         },
                         "employed_date": {
-                            "required": False, 
+                            "required": False,
                             "allowed_types": [str]
                         }
                     }
@@ -172,7 +172,7 @@ def test_8_basic_embedded_objects_two_levels_without_optional():
                             "allowed_types": [str]
                         },
                         "employed_date": {
-                            "required": False, 
+                            "required": False,
                             "allowed_types": [str]
                         }
                     }
@@ -227,7 +227,7 @@ def test_10_basic_list_of_strings():
     obj = {
         "strings": [
             "Hejsan",
-            "där", 
+            "där",
             "du",
             "din",
             "lilla",
@@ -252,7 +252,7 @@ def test_11_basic_list_of_strings_two_nums():
     obj = {
         "strings": [
             "Hejsan",
-            "där", 
+            "där",
             "du",
             5,
             "din",

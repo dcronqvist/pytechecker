@@ -33,7 +33,7 @@ def check(sample: dict, obj: dict, parent=None, allow_overflow=False) -> (bool, 
 
     for key in sample:
 
-        if parent:  
+        if parent:
             parent_key = parent + "." + key
         else:
             parent_key = key
@@ -57,7 +57,6 @@ def check(sample: dict, obj: dict, parent=None, allow_overflow=False) -> (bool, 
                     if not succ:
                         errors.extend(err)
                         continue
-                    
                 elif type(obj[key]) == list:
                     # Check all list elements somehow
                     l_ele = sample[key]["list_element"]
@@ -73,7 +72,6 @@ def check(sample: dict, obj: dict, parent=None, allow_overflow=False) -> (bool, 
 
                 elif type(obj[key]) == tuple:
                     order = sample[key]["tuple_order"]
-                    
                     if len(order) != len(obj[key]):
                         errors.append(f"ERROR: On key '{parent_key}'', expected tuple of length {len(order)}, got tuple of length {len(obj[key])}.")
                         continue
