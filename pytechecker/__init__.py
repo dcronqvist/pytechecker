@@ -1,20 +1,21 @@
-def get_overflow(sample, obj):
+def get_overflow(sample: dict, obj: dict, all_sub=False) -> list:
+    """Returns a list of all fields which exist in obj, but not in sample."""
     fields = []
-
     if hasattr(obj, "__iter__"):
         for field in obj:
             if field not in sample:
                 fields.append(field)
+            else:
+                if all_sub and type(obj[field]) == dict:
+                    fs = get_overflow(sample[field]["embedded_dict"], obj[field], all_sub)
+                    fields.extend(fs)
         return fields
     else:
         return []
 
 
-
-def check(sample, obj, parent=None, allow_overflow=False):
-    """
-    Compares an object to a sample object, which the obj has to match.
-    """
+def check(sample: dict, obj: dict, parent=None, allow_overflow=False) -> (bool, list):
+    """Performs type checking on obj against sample. Returns True or False if obj fits the sample. If obj does not fit, then return an array of errors."""
     # Check if there are other fields in obj, than in sample
     errors = []
 
@@ -81,6 +82,4 @@ def check(sample, obj, parent=None, allow_overflow=False):
                         if type(obj[key][i]) != order[i]:
                             errors.append(f"ERROR: On key '{parent_key}'', expected tuple with order ({','.join([t.__name__ for t in order])}), got tuple with order ({','.join([type(t).__name__ for t in obj[key]])})")
                             break
-
-
     return len(errors) == 0, errors

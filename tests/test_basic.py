@@ -1,4 +1,4 @@
-from pytechecker import *
+from pytechecker import check, get_overflow
 
 """
 Run these tests uting pytest.
@@ -420,3 +420,88 @@ def test_16_basic_tuple_key():
 
     succ, errors = check(sample, obj)
     assert (succ) and len(errors) == 0, "Basic tuple with correct order and same length failed."
+
+# TEST 17
+def test_17_checking_basic_overflow():
+    sample = {
+        "tuple": {
+            "required": True,
+            "allowed_types": [tuple],
+            "tuple_order": [str, int, int, float]
+        }
+    }
+    obj = {
+        "tuple": ("Daniel", 5, 10, 121.67),
+        "cool_key": "Hello World!"
+    }
+
+    overflow = get_overflow(sample, obj)
+    assert overflow == ["cool_key"], "Basic overflow test failed."
+
+# TEST 17
+def test_17_checking_two_depth_overflow():
+    sample = {
+        "person": {
+            "required": True,
+            "allowed_types": [dict],
+            "embedded_dict": {
+                "name": {
+                    "required": True,
+                    "allowed_types": [str]
+                }
+            }
+        }
+    }
+    obj = {
+        "person": {
+            "name": "Daniel Cronqvist",
+            "age": 21
+        }
+    }
+
+    overflow = get_overflow(sample, obj, all_sub=True)
+    assert overflow == ["age"], "Basic overflow test with depth failed."
+
+
+# TEST 18
+def test_18_checking_high_depth_overflow():
+    sample = {
+        "person": {
+            "required": True,
+            "allowed_types": [dict],
+            "embedded_dict": {
+                "name": {
+                    "required": True,
+                    "allowed_types": [str]
+                },
+                "address": {
+                    "required": True,
+                    "allowed_types": [dict],
+                    "embedded_dict": {
+                        "city": {
+                            "required": True,
+                            "allowed_types": [str]
+                        },
+                        "street": {
+                            "required": True,
+                            "allowed_types": [str]
+                        }
+                    }
+                }
+            }
+        }
+    }
+    obj = {
+        "person": {
+            "name": "Daniel Cronqvist",
+            "age": 21,
+            "address": {
+                "city": "Göteborg",
+                "street": "Pilegårdsgatan 20B",
+                "postal_code": "41877"
+            }
+        }
+    }
+
+    overflow = get_overflow(sample, obj, all_sub=True)
+    assert overflow == ["age", "postal_code"], "Basic overflow test with multiple depth failed."
