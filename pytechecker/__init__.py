@@ -73,11 +73,31 @@ def check(sample: dict, obj: dict, parent=None, allow_overflow=False) -> (bool, 
                 elif type(obj[key]) == tuple:
                     order = sample[key]["tuple_order"]
                     if len(order) != len(obj[key]):
-                        errors.append(f"ERROR: On key '{parent_key}'', expected tuple of length {len(order)}, got tuple of length {len(obj[key])}.")
+                        errors.append(f"ERROR: On key '{parent_key}', expected tuple of length {len(order)}, got tuple of length {len(obj[key])}.")
                         continue
 
                     for i in range(len(order)):
                         if type(obj[key][i]) != order[i]:
-                            errors.append(f"ERROR: On key '{parent_key}'', expected tuple with order ({','.join([t.__name__ for t in order])}), got tuple with order ({','.join([type(t).__name__ for t in obj[key]])})")
+                            errors.append(f"ERROR: On key '{parent_key}', expected tuple with order ({','.join([t.__name__ for t in order])}), got tuple with order ({','.join([type(t).__name__ for t in obj[key]])}).")
                             break
+                        
+                    for i in range(len(order)):
+                        if type(obj[key][i]) == dict:
+                            succ, err = check(sample[key]["embedded_dict"], obj[key][i], parent_key + f"[{i}]", allow_overflow)
+                            if not succ:
+                                errors.extend(err)
+
+                        if type(obj[key][i]) == list:
+                            # Check all list elements somehow
+                            l_ele = sample[key]["list_element"]
+
+                            for i, ele in enumerate(obj[key][i]):
+                                if type(ele) not in l_ele["allowed_types"]:
+                                    errors.append(f"ERROR: On key '{parent_key}[{i}]', expected one of {[t.__name__ for t in l_ele['allowed_types']]}, got {type(ele).__name__}.")
+                                # ele has to match l_ele.
+                                if type(ele) == dict:
+                                    succ, err = check(l_ele["embedded_dict"], ele, parent_key + f"[{i}]", allow_overflow)
+                                    if not succ:
+                                        errors.extend(err)
+                            
     return len(errors) == 0, errors

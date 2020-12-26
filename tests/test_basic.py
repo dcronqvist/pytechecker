@@ -551,3 +551,128 @@ def test_19_checking_high_depth_overflow():
     overflow = get_overflow(sample, obj, all_sub=True)
     succ, errors = check(sample, obj, allow_overflow=False)
     assert overflow == ["age", "postal_code"] and not succ, "Basic overflow test with multiple depth failed."
+
+
+# TEST 20
+def test_20_tuple_with_dict():
+    sample = {
+        "tuple": {
+            "required": True,
+            "allowed_types": [tuple],
+            "tuple_order": [int, float, dict],
+            "embedded_dict": {
+                "name": {
+                    "required": True,
+                    "allowed_types": [str]
+                },
+                "age": {
+                    "required": False,
+                    "allowed_types": [int]
+                }
+            }
+        }
+    }
+    obj = {
+        "tuple": (10, 2.2, {
+            "name": "Daniel",
+            "age": 21
+        }),
+    }
+
+    succ, errors = check(sample, obj)
+    assert len(errors) == 0 and succ, "Basic tuple with dict failed."
+
+
+# TEST 21
+def test_21_tuple_with_list():
+    sample = {
+        "tuple": {
+            "required": True,
+            "allowed_types": [tuple],
+            "tuple_order": [int, float, list, str],
+            "list_element": {
+                "allowed_types": [str]
+            }
+        }
+    }
+    obj = {
+        "tuple": (10, 2.2, ["Blue", "Green", "Red"], "Hello World!"),
+    }
+
+    succ, errors = check(sample, obj)
+    assert len(errors) == 0 and succ, "Basic tuple with list failed."
+
+
+# TEST 22
+def test_22_tuple_with_list_wrong():
+    sample = {
+        "tuple": {
+            "required": True,
+            "allowed_types": [tuple],
+            "tuple_order": [int, float, list, str],
+            "list_element": {
+                "allowed_types": [str]
+            }
+        }
+    }
+    obj = {
+        "tuple": (10, 2.2, ["Blue", "Green", "Red", 2], "Hello World!"),
+    }
+
+    succ, errors = check(sample, obj)
+    assert len(errors) == 1 and not succ, "Basic tuple with list wrong failed."
+
+
+# TEST 23
+def test_23_tuple_with_list_and_dict():
+    sample = {
+        "tuple": {
+            "required": True,
+            "allowed_types": [tuple],
+            "tuple_order": [int, float, list, str, dict],
+            "list_element": {
+                "allowed_types": [dict],
+                "embedded_dict": {
+                    "name": {
+                        "required": True,
+                        "allowed_types": [str]
+                    },
+                    "age": {
+                        "required": False,
+                        "allowed_types": [int]
+                    }
+                }
+            },
+            "embedded_dict": {
+                "num": {
+                    "required": True,
+                    "allowed_types": [int, float]
+                },
+                "string": {
+                    "required": True,
+                    "allowed_types": [str]
+                }
+            }
+        }
+    }
+    obj = {
+        "tuple": (1, 2.2, [
+            {
+                "name": "Daniel",
+                "age": 21
+            },
+            {
+                "name": "Saga"
+            },
+            {
+                "name": "Carl",
+                "age": 22
+            }
+        ], "Hello World!", {
+            "num": 5,
+            "string": "I am a bit of a string."
+        })
+    }
+
+    succ, errors = check(sample, obj)
+    assert len(errors) == 0 and succ, "Basic tuple with list and dict failed."
