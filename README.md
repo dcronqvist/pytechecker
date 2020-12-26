@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/dcronqvist/pytechecker/workflows/Tests/badge.svg?branch=main)
 
-**Pytechecker** is a utility library for type checking dictionaries against sample objects.
+**Pytechecker** is a utility library for type checking objects against sample objects.
 
 ### Table of Contents
 * [A simple example](https://github.com/dcronqvist/pytechecker#a-simple-example)
