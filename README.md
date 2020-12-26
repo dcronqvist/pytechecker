@@ -4,6 +4,14 @@
 
 **Pytechecker** is a utility library for type checking dictionaries against sample objects.
 
+### Table of Contents
+* [A simple example](https://github.com/dcronqvist/pytechecker#a-simple-example)
+* [Embedded dicts](https://github.com/dcronqvist/pytechecker#embedded-dicts)
+* [What about lists?](https://github.com/dcronqvist/pytechecker#what-about-lists)
+* [Dicts as list elements](https://github.com/dcronqvist/pytechecker#dicts-as-list-elements)
+* [Tuples](https://github.com/dcronqvist/pytechecker#tuples)
+* [Dicts and lists in tuples](https://github.com/dcronqvist/pytechecker#dicts-and-lists-in-tuples)
+
 # Examples
 
 ## A simple example
