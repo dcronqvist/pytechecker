@@ -2,7 +2,15 @@
 
 ![Tests](https://github.com/dcronqvist/pytechecker/workflows/Tests/badge.svg?branch=main)
 
-**Pytechecker** is a utility library for type checking dictionaries against sample objects.
+**Pytechecker** is a utility library for type checking objects against sample objects.
+
+### Table of Contents
+* [A simple example](https://github.com/dcronqvist/pytechecker#a-simple-example)
+* [Embedded dicts](https://github.com/dcronqvist/pytechecker#embedded-dicts)
+* [What about lists?](https://github.com/dcronqvist/pytechecker#what-about-lists)
+* [Dicts as list elements](https://github.com/dcronqvist/pytechecker#dicts-as-list-elements)
+* [Tuples](https://github.com/dcronqvist/pytechecker#tuples)
+* [Dicts and lists in tuples](https://github.com/dcronqvist/pytechecker#dicts-and-lists-in-tuples)
 
 **Pytechecker** works excellently for checking API payloads. For how it can be used for this, [here's an example of how it can be used together with a flask api](https://github.com/dcronqvist/restberry-api/blob/214a5ca5666fa6488344cc5a4aaf14239f68ad05/api/routes/economy/accounts.py#L12-L38).
 
