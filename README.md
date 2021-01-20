@@ -4,6 +4,10 @@
 
 **Pytechecker** is a utility library for type checking dictionaries against sample objects.
 
+**Pytechecker** works excellently for checking API payloads. For how it can be used for this, [here's an example of how it can be used together with a flask api](https://github.com/dcronqvist/restberry-api/blob/214a5ca5666fa6488344cc5a4aaf14239f68ad05/api/routes/economy/accounts.py#L12-L38).
+
+
+
 # Examples
 
 ## A simple example
