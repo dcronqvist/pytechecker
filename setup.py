@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pytechecker", # Replace with your own username
-    version="0.0.1",
+    version="1.0.0",
     author="dcronqvist",
     author_email="daniel@dcronqvist.se",
     description="A lightweight type/object checking library.",
