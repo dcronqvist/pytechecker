@@ -3,6 +3,23 @@ from pytechecker import check, get_overflow
 """
 Run these tests uting pytest.
 """
+# TEST 0
+def test_0_base():
+    sample = None
+    obj = {}
+    succ, errors = check(sample, obj)
+    assert (not succ), "Undefined sample obj passed."
+
+def test_0_5_base():
+    sample = {
+        "yes": {
+            "required": True,
+            "allowed_types": [int]
+        }
+    }
+    obj = None
+    succ, errors = check(sample, obj)
+    assert (not succ), "Undefined supplied obj passed."
 
 # TEST 1
 def test_1_int_at_string_key():

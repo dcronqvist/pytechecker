@@ -18,6 +18,12 @@ def check(sample: dict, obj: dict, parent=None, allow_overflow=False) -> (bool, 
     """Performs type checking on obj against sample. Returns True or False if obj fits the sample. If obj does not fit, then return an array of errors."""
     # Check if there are other fields in obj, than in sample
     errors = []
+    if not sample:
+        errors.append(f"ERROR: Sampled object cannot be undefined.")
+    if not obj:
+        errors.append(f"ERROR: Supplied object cannot be undefined.")
+    if not sample or not obj:
+        return False, errors
 
     if parent:
         parent_key = parent + "."
