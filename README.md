@@ -18,6 +18,35 @@
 
 # Examples
 
+## The gist of it all
+Use pip to install **pytechecker** `python3 -m pip install pytechecker`.
+
+Then you simply use the `check` function from the module.
+```python
+from pytechecker import check
+
+sample = {
+    "name": {
+        "required": True,
+        "allowed_types": [str]
+    },
+    "age": {
+        "required": True,
+        "allowed_types": [int]
+    }
+}
+
+obj = {
+    "name": "dcronqvist",
+    "age": 21
+}
+
+# succ will be True if it passed type checking
+# errors will be an array of strings that tell you
+# what went wrong during type checking, if succ is False.
+succ, errors = check(sample, obj)
+```
+
 ## A simple example
 
 Let's start by taking a look at a very simple sample object:
