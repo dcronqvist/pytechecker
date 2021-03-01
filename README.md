@@ -1,6 +1,7 @@
 # pytechecker
 
 ![Tests](https://github.com/dcronqvist/pytechecker/workflows/Tests/badge.svg?branch=main)
+![pypi](https://badge.fury.io/py/pytechecker.svg)
 
 **Pytechecker** is a utility library for type checking objects against sample objects.
 
